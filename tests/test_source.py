@@ -12,3 +12,4 @@ class StreamTest(SourceTest):
         self.control('mask');self.assertEqual(self.request(rows[0]['url'])[0],451);self.assertEqual(self.get('/manifest')['redactions'][0]['seq'],[2,2])
         self.control('reconnect');self.assertEqual(self.request(rows[0]['url'])[0],409)
         self.control('live');self.assertFalse(self.get('/manifest')['ended']);self.control('unavailable');self.assertEqual(self.request('/backfill?channel=camera&epoch=2')[0],503)
+        self.control('grant',session_ms=[0,1000]);self.assertEqual(self.get('/manifest')['grant']['session_ms'],[0,1000])
