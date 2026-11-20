@@ -1,6 +1,33 @@
 services:
   source:
     build: .
+    command: ["python3", "-m", "source.app", "--host", "0.0.0.0", "--port", "8765"]
     ports:
       - "127.0.0.1:8765:8765"
+    restart: "no"
+  collector:
+    build: .
+    command:
+      - "python3"
+      - "-m"
+      - "collector"
+      - "--request"
+      - "inputs/request.json"
+      - "run"
+      - "--source"
+      - "http://source:8765"
+      - "--data-root"
+      - "var/data"
+      - "--managed-root"
+      - "var/managed"
+      - "--export-root"
+      - "var/exports"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8770"
+    ports:
+      - "127.0.0.1:8770:8770"
+    depends_on:
+      - source
     restart: "no"

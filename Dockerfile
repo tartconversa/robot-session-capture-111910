@@ -3,6 +3,7 @@ WORKDIR /workspace
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY source ./source
+COPY collector ./collector
 COPY tests ./tests
 COPY inputs ./inputs
 COPY docs ./docs
